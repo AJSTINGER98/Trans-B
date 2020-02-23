@@ -1,1 +1,4 @@
-/node_mudules
+/node_modules
+/Utilities
+/trial.html
+/__pycache__

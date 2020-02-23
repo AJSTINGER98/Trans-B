@@ -1,0 +1,17 @@
+<%-include ('partials/header.ejs')%>
+<div class="container-fluid w-100">
+    <form id="speak" method="post" action="/speech">
+        <div class="speech w-100 text-center">
+            <input class= "form-control form-control-lg" type="text" name="text" id="input-speak" placeholder="Speak"/>
+        </div>
+        <div class="microphone-body btn-speak">
+            <div class="microphone" title="Click to record">
+                <div class="circle"></div>
+            </div>
+        </div> 
+</div>
+  
+    <!-- <div class="d-inline-block btn-speak"><i class="fas fa-microphone"></i></div>    -->
+</form>
+
+<%-include ('partials/footer.ejs')%>

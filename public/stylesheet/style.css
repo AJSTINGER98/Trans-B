@@ -1,0 +1,79 @@
+
+.speech{
+    height: 180px;
+}
+
+.speech input {
+    border: 0; 
+    width: 700px; 
+    display: inline-block; 
+    margin-top: 100px;
+}
+
+
+body{
+    background: rgb(127,83,172);
+    background: radial-gradient(circle, rgba(127,83,172,1) 22%, rgba(100,125,238,1) 66%);
+    /* display: flex; */
+    /* height: 100vh; */
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* color: black; */
+}
+.microphone-body{
+    display: flex;
+    height: 31vh;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+}
+.microphone{
+    background: #5fb5fe;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+.microphone:hover{
+    width:160px;
+    height:160px;
+}
+.circle{
+    width: 23px;
+    height: 45px;
+    background: #fff;
+    position: absolute;
+    border-radius: 20px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.circle::before {
+    content: ')';
+    position: absolute;
+    bottom: -43px;
+    left: 8px;
+    transform: rotate(90deg);
+    font: 50px cursive;
+}
+.circle::after {
+    content: '|';
+    position: absolute;
+    bottom: -35px;
+    left: 8px;
+    font-weight: 1000;
+    font: 20px cursive;
+}
+
+.microphone:hover > .circle {
+    background:rgba(126, 0, 252, 0.959);
+    color: rgba(126, 0, 252, 0.959)  ;
+}
+
+@media only screen and (max-width: 730px) {
+    .speech input {
+        width: 95%;
+    }
+  }
+
