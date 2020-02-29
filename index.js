@@ -7,9 +7,6 @@ const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost:27017/mydb2",{ useNewUrlParser: true,useUnifiedTopology: true });
 mongoose.set('useFindAndModify', false);
 
-//Import models
-// const trans = require("./models/transaction");
-
 //set default view and default directories
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + "/public"));

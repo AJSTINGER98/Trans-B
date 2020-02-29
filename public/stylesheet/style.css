@@ -11,15 +11,6 @@
 }
 
 
-body{
-    background: rgb(127,83,172);
-    background: radial-gradient(circle, rgba(127,83,172,1) 22%, rgba(100,125,238,1) 66%);
-    /* display: flex; */
-    /* height: 100vh; */
-    /* justify-content: center; */
-    /* align-items: center; */
-    /* color: black; */
-}
 .microphone-body{
     display: flex;
     height: 31vh;

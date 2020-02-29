@@ -18,7 +18,7 @@ def postdata():
     x = "SK you as" or "SK us" or "sku as" or "s k u s" in data['text']
     data['text'] = data['text'].replace(x,"SKU as")
     print("data received as:",data['text'])
-    txt = "Create an order with requested date as 15 March,SKU as ABC and company as XYZ"
+    txt = "Update quantity to 300 and company to aab where sku is xyz and company is bbc"
 
     doc = nlp(txt)
     newdata = {}
@@ -29,7 +29,7 @@ def postdata():
     create_l = ['create','make','generate','produce']
     update_l = ['update','correct','rectify']
     delete_l = ['delete','remove','cancel']
-    search_l = ['list','search','show']
+    search_l = ['list','search','show','display']
     col = ['sku','company','quantity']
 
     token_list = []
@@ -40,14 +40,24 @@ def postdata():
         token_list.append(token.text)        
     
 #Create or Delete Operation
+    
+     #Delete last few entries
+    if (("previous" in token_list or "last" in token_list) and (token_list[0].lower() in delete_l or token_list[0].lower() in search_l)):
+        if "previous" in token_list:
+            newdata["count"] = '1'
+        else:
+            newdata["count"] = token_list[token_list.index("last")+1]
+            
+    #Create or Delete or Search based on property
 
-    if(token_list[0].lower() in create_l or token_list[0].lower() in delete_l or token_list[0].lower() in search_l):
+    elif(token_list[0].lower() in create_l or token_list[0].lower() in delete_l or token_list[0].lower() in search_l):
         
         #Filtering tokens
         for word in token_list:
             lex = nlp.vocab[word]
             if lex.is_stop == False and lex.is_punct == False:
                 token_fil.append(word.lower())
+
 
         #Save-Date or Delete-Date
         for token in doc.ents:
@@ -88,6 +98,7 @@ def postdata():
 #UPDATE OPERATION
     
     elif(token_list[0].lower() in update_l):
+        newdata["set"] = {}
         for i in range(len(token_list)):
             if token_list[i].lower() == "where":
                 condition = [x.lower() for x in token_list[i+1:]]
@@ -101,7 +112,7 @@ def postdata():
                     newdata[token.label_] = token.text
 
                 elif token.text in " ".join(set_data):
-                    newdata["set_"+token.label_] = token.text
+                    newdata["set"][token.label_] = token.text
         
         
         #Filtering tokens
@@ -124,9 +135,9 @@ def postdata():
 
         for cond in set_data:
             if cond in col:
-                newdata["set_"+cond] = set_data[set_data.index(cond)+1]
+                newdata["set"][cond] = set_data[set_data.index(cond)+1]
                 if cond == 'sku' or cond == 'company':
-                    newdata["set_"+cond].upper()         
+                    newdata["set"][cond].upper()         
 
 
              
@@ -134,6 +145,7 @@ def postdata():
 
 
     # do something with this data variable that contains the data from the node server
+    print(newdata)
     return json.dumps(newdata)
  
 if __name__ == "__main__":
