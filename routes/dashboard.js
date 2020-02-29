@@ -3,6 +3,8 @@ const router = express.Router();
 const app = express();
 var request = require('request-promise');
 
+const supervisor = require("../models/supervisor");
+
 router.get('/',(req,res) =>{
     res.render('home');
 });
@@ -18,8 +20,9 @@ router.post('/speech', (req,res) => {
         json: true 
     };
     var sendrequest = request(options).
-    then(function(parsedBody){
-        console.log(parsedBody);
+    then(function(newdata){
+
+
     })
     .catch(function(err){
         console.log(err);
