@@ -2,16 +2,21 @@
 <div class="container-fluid w-100">
     <form id="speak" method="post" action="/speech">
         <div class="speech w-100 text-center">
-            <input class= "form-control form-control-lg" type="text" name="text" id="input-speak" placeholder="Speak"/>
+            <input class= "form-control form-control-lg bg-transparent text-dark" type="text" name="text" id="input-speak" placeholder="Speak"/>
         </div>
-        <div class="microphone-body btn-speak">
-            <div class="microphone" title="Click to record">
-                <div class="circle"></div>
+        <div class="microphone-body btn-speak" title="">
+            <div class="rounded-circle border circle btn border border-dark p-2 mic-hover" title="Click to Record">
+                <div class="rounded-circle border border-dark p-4 border-4">
+                    <div class="container-fluid"> 
+                        <i class="fas fa-microphone fa-5x text-dark"></i>
+                    </div>
+                </div>
             </div>
         </div> 
 </div>
   
     <!-- <div class="d-inline-block btn-speak"><i class="fas fa-microphone"></i></div>    -->
 </form>
+
 
 <%-include ('partials/footer.ejs')%>

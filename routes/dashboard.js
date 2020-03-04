@@ -1,25 +1,28 @@
 const express = require('express');
 const router = express.Router();
 const app = express();
-var request = require('request-promise');
+const request = require('request-promise');
+const middleware = require('../middleware/middleware');
+const transaction = require("../model/transaction");
 
-var transaction = require("../model/transaction");
 
-router.get('/', (req, res) => {
+
+router.get('/',middleware.isLoggedIn, (req, res) => {
     res.render('home');
+
 });
-router.get('/transaction', (req, res) => {
+router.get('/transaction', middleware.isLoggedIn,(req, res) => {
     transaction.find({}).sort('-_id').limit(50).exec(function(err, transaction) {
         if (err) {
             console.log(err);
         }
         else {
             console.log(transaction);
-            res.render("transaction", { transaction: transaction });
+            res.render("transaction", { transaction: transaction,rate:10,text:"Transaction"});
         }
     });
 });
-router.post('/speech', (req, res) => {
+router.post('/speech', middleware.isLoggedIn,(req, res) => {
     var data = {
         text: req.body.text,
     };
@@ -49,6 +52,8 @@ router.post('/speech', (req, res) => {
                         console.log(err);
                     }
                     else {
+                        
+                        req.flash("success","Transaction saved successfully");
                         console.log("Data saved successfully");
                         res.redirect('/transaction');
                     }
@@ -76,6 +81,7 @@ router.post('/speech', (req, res) => {
                                     console.log(err);
                                 }
                                 else{
+                                    req.flash("success","Transaction has been removed successfully");
                                     console.log("Data removed successfully");
                                     res.redirect('/transaction');
                                 }
@@ -89,6 +95,7 @@ router.post('/speech', (req, res) => {
                             console.log(err);
                         }
                         else{
+                            req.flash("success","Transaction has been removed successfully");
                             console.log("Data removed successfully");
                             res.redirect('/transaction');
                         }
@@ -106,8 +113,13 @@ router.post('/speech', (req, res) => {
                             console.log(err);
                         }
                         else{
+                            if(trans.length == 0){
+                                req.flash('error','Could not find any matching transaction');
+                                return res.redirect('/');
+                            }
                             console.log(trans);
-                            res.render('transaction',{transaction:trans});
+                            var success = 'These are the list of transactions you requested';
+                            res.render('transaction',{transaction:trans ,rate:10,success:success});
                         }
                     });
                 }
@@ -117,8 +129,13 @@ router.post('/speech', (req, res) => {
                             console.log(err);
                         }
                         else{
+                            if(transaction.length == 0){
+                                req.flash('error','Could not find any matching transaction');
+                                return res.redirect('/');
+                            }
                             console.log(transaction);
-                            res.render('transaction',{transaction:transaction});
+                            success='These are the list of transactions you requested';
+                            res.render('transaction',{transaction:transaction, rate:10,success:success});
                         }
                     });
                 }
@@ -128,17 +145,27 @@ router.post('/speech', (req, res) => {
                 delete newdata.operation;
                 var set = newdata.set;
                 delete newdata.set;
-                transaction.updateMany(newdata, { $set: set},function(err,res){
-                    if(err){
-                        console.log(err);
-                    }
-                    else{
-                        console.log(res);
-                    }
-                });
+                if(newdata.length != undefined){
+                    transaction.updateMany(newdata, { $set: set},function(err,result){
+                        if(err){
+                            console.log(err);
+                        }
+                        else{
+                            req.flash("success","Transaction details have been Updated");
+                            console.log(res);
+                            res.redirect('/');
+                        }
+                    });
+                }
+                else{
+                    req.flash("error","Insufficient Data! Cannot update Transaction!!");
+                    console.log("Cannot update transaction");
+                    res.redirect('/');
+                }
 
             }
             else{
+                req.flash("error","Insufficient Data! Please provide more Information");
                 console.log("Please provide more Info");
                 res.redirect('/');
             }
@@ -148,14 +175,5 @@ router.post('/speech', (req, res) => {
         });
 });
 
-function compare(a, b) {
-    if (a._id < b._id) {
-        return 1;
-    }
-    if (a._id > b._id) {
-        return -1;
-    }
-    return 0;
-}
 
 module.exports = router;

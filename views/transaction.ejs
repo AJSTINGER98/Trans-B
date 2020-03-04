@@ -1,11 +1,39 @@
 <%-include ('partials/header.ejs')%>
-<div class="">
-    <h1>Transaction History</h1>
-</div>
 
-<div class="container">
-    <div class="border border-dark rounded">
-        <div></div>
-    </div>
-</div>
-<%-include ('partials/footer.ejs')%>
+<div class="container my-5 border border-dark p-1 rounded bg-transparent">
+  
+    <section class="dark-grey-text border border-dark p-5 bg-white rounded border-3 bg-transparent">
+  
+      <h3 class="h1 text-center font-weight-bold mb-5">Transactions</h3>
+  
+      <div class="row">
+      <% transaction.forEach((transaction) =>{%>
+        <div class="col-12 mb-4">
+          <div class="card z-depth-4 border">
+            <div class="card-body p-0">
+              <div class="row mx-0  transaction-body ">
+                <div class="col-md-8 bg-light rounded-left pt-4 pl-5 pl-md-4">
+                  <h5 class="font-weight-bold">ID: #<%=transaction._id%> </h5>
+                  <p class="font-weight-light text-secondary mb-4">Company: <span class="font-weight-bold text-uppercase text-center"><%=transaction.company%></span></p>
+                  <p class="font-weight-light text-secondary mb-4">SKU: <span class="font-weight-bold text-uppercase"><%=transaction.sku%></span></p>
+                  <p class="font-weight-light text-secondary mb-4">Quantity: <span class="font-weight-bold text-uppercase"><%=transaction.quantity%></span></p>
+                  <p class="font-weight-light text-secondary mb-4">Price/Unit: <span class="font-weight-bold text-uppercase"><%=rate%></span></p>
+                </div>
+                <div class="col-md-4 text-center trans-price">
+                                  <p class="h1 font-weight-normal">Rs. <%=rate*transaction.quantity%></p>
+                  <p class="h5 font-weight-light mb-4">Date : <%=transaction.DATE%></p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <%});%>
+      </div>
+      <!-- Grid row -->
+  
+    </section>
+    <!--Section: Content-->
+  
+  
+  </div>
+            <%-include ('partials/footer.ejs')%>

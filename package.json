@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/AJSTINGER98/Trans-B#readme",
   "dependencies": {
+    "connect-flash": "^0.1.1",
     "ejs": "^3.0.1",
     "express": "^4.17.1",
     "express-session": "^1.17.0",
@@ -28,5 +29,8 @@
     "passport-local-mongoose": "^6.0.1",
     "request": "^2.88.2",
     "request-promise": "^4.2.5"
+  },
+  "devDependencies": {
+
   }
 }
