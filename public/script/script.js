@@ -19,7 +19,7 @@ if ('SpeechRecognition' in window) {
     recognition.continuous = false;
     recognition.lang = 'en-IN';
     recognition.interimResults = true;
-    recognition.maxAlternatives = 100;
+    recognition.maxAlternatives = 1000;
 
     recognition.onresult = function (e) {
         speechText = e.results[0][0].transcript;

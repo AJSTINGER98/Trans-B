@@ -36,7 +36,6 @@ router.post('/speech', middleware.isLoggedIn,(req, res) => {
     var sendrequest = request(options).
         then(function (newdata) {
             op = newdata.operation.toLowerCase();
-            
             //CREATE OPERATION
             if ((op == "create" ||op ==  "make" ||op == 'generate' ||op == 'produce') && Object.keys(newdata).length >3){
                 delete newdata.operation;
@@ -163,9 +162,17 @@ router.post('/speech', middleware.isLoggedIn,(req, res) => {
                             console.log(err);
                         }
                         else{
-                            req.flash("success","Transaction details have been Updated");
-                            console.log(res);
-                            res.redirect('/');
+                            // console.log(result);
+                            if(result.nModified == 0){
+                                req.flash("error","No matching transaction was found");
+                                console.log(res);
+                                res.redirect('/');                                    
+                            }
+                            else{
+                                req.flash("success","Transaction details have been Updated");
+                                console.log(res);
+                                res.redirect('/');
+                            }
                         }
                     });
                 }
@@ -184,6 +191,9 @@ router.post('/speech', middleware.isLoggedIn,(req, res) => {
         })
         .catch(function (err) {
             console.log(err);
+            req.flash("error","Insufficient Data! Please provide more Information");
+            res.redirect('/');
+
         });
 });
 
