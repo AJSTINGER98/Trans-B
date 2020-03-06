@@ -4,11 +4,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jarvice</title>
+    <title>Janice</title>
     <link rel="stylesheet" href="">
     <link rel="stylesheet" href="/BOOTSTRAP_4.css" type="text/css">
     <link rel="stylesheet" href="/Fontawesome/css/all.css" type="text/css">
     <link rel="stylesheet" href="stylesheet/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Chakra+Petch:400,700&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -21,16 +22,16 @@
             </button>
             <div class="collapse navbar-collapse" id="myNav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
+                    <li class="nav-item <%=typeof page != undefined && page === 'home'?'active':''%>">
                         <a class="nav-link text-light" href="/">Home</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item <%=typeof page != undefined && page === 'transaction'?'active':''%>">
                         <a class="nav-link text-light" href="/transaction">Transactions</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                        <a class="nav-link text-light" href="/logout">Logout <i class="fas fa-user fa-fw"></i></a>
+                    <li class="nav-item ">
+                        <a class="nav-link text-light" href="/logout">Logout <i class="fas fa-sign-out-alt fa-fw"></i></a>
                     </li>
                 </ul>
             </div>
@@ -38,21 +39,3 @@
         </div>
 
     </nav>
-
-    <% if(error && error.length > 0){ 
-        %>
-    <div class="container-fluid w-100 p-0">
-        <div class="alert alert-danger" role="alert">
-            <%= error %>
-        </div>
-    </div>
-
-    <% } else if(success && success.length > 0) { 
-        %>
-
-    <div class="container-fluid w-100 p-0">
-        <div class="alert alert-success" role="alert">
-            <%= success %>
-        </div>
-    </div>
-    <% } %>

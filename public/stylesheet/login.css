@@ -1,13 +1,16 @@
 body{
-    background-image: url("https://images.unsplash.com/photo-1518818419601-72c8673f5852?ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80");
+    background-image: url("https://images.unsplash.com/photo-1556742502-ec7c0e9f34b1?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1534&q=80");
     background-position: center;
     background-repeat: no-repeat;
-    background-size: cover; 
+    background-size: cover;
+    background-position: 0px , 10px;
+    font-family: 'Chakra Petch', sans-serif; 
 }
 
 .container{
-    margin-top: 10%;
+    margin-top: 20%;
     margin-bottom: 20%;
+    margin-left: 13%;
 }
 
 .card{

@@ -1,26 +1,12 @@
 const synth = window.speechSynthesis;
 
+const sound1 = document.querySelector('.sound1');
+const sound2 = document.querySelector('.sound2');
+
  const speak = (event) =>{
      utterThis = new SpeechSynthesisUtterance(event);
      synth.speak(utterThis);
  };
-
-// function populateVoiceList() {
-//   voices = synth.getVoices();
-
-//   for(i = 0; i < voices.length ; i++) {
-//     var option = document.createElement('option');
-//     option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
-    
-//     if(voices[i].default) {
-//       option.textContent += ' -- DEFAULT';
-//     }
-
-//     option.setAttribute('data-lang', voices[i].lang);
-//     option.setAttribute('data-name', voices[i].name);
-//     voiceSelect.appendChild(option);
-//   }
-// }
 
 
 //Using speech recognition
@@ -33,7 +19,7 @@ if ('SpeechRecognition' in window) {
     recognition.continuous = false;
     recognition.lang = 'en-IN';
     recognition.interimResults = true;
-    recognition.maxAlternatives = 2;
+    recognition.maxAlternatives = 100;
 
     recognition.onresult = function (e) {
         speechText = e.results[0][0].transcript;
@@ -41,8 +27,9 @@ if ('SpeechRecognition' in window) {
     };
 
     recognition.onspeechend = function (e) {
-        recognition.stop();
-        document.getElementById('speak').submit();
+        setTimeout(function(){ recognition.stop();}, 1000);
+        sound2.play();
+        setTimeout(function(){ document.getElementById('speak').submit(); }, 1000);
 
     };
     recognition.onerror = function (event) {
@@ -52,6 +39,7 @@ if ('SpeechRecognition' in window) {
         diagnostic.textContent = 'I didnt recognise.';
     };
     $('.btn-speak').click(function () {
+        sound1.play();
         recognition.start();
     });
 }
@@ -65,7 +53,6 @@ $(document).ready(function(){
     $('.speech input').attr("placeholder", "Click to Record");
         $('.btn-speak').click(function(){
             $('.speech input').attr("placeholder", "Listening...");
-            $('#load').addClass('loader');
         });
 });
 

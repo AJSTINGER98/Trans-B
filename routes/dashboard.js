@@ -8,7 +8,7 @@ const transaction = require("../model/transaction");
 
 
 router.get('/',middleware.isLoggedIn, (req, res) => {
-    res.render('home');
+    res.render('home',{page:"home"});
 
 });
 router.get('/transaction', middleware.isLoggedIn,(req, res) => {
@@ -18,7 +18,7 @@ router.get('/transaction', middleware.isLoggedIn,(req, res) => {
         }
         else {
             console.log(transaction);
-            res.render("transaction", { transaction: transaction,rate:10,text:"Transaction"});
+            res.render("transaction", { transaction: transaction,rate:10,page:"transaction",});
         }
     });
 });
@@ -95,9 +95,18 @@ router.post('/speech', middleware.isLoggedIn,(req, res) => {
                             console.log(err);
                         }
                         else{
-                            req.flash("success","Transaction has been removed successfully");
-                            console.log("Data removed successfully");
-                            res.redirect('/transaction');
+                            if(result.deletedCount == 0){
+                                console.log(result);
+                                req.flash("error","No such transaction was found");
+                                console.log("No Tranasction Found");
+                                res.redirect('/');    
+                            }
+                            else{
+                                console.log(result);
+                                req.flash("success","Transaction has been removed successfully");
+                                console.log("Data removed successfully");
+                                res.redirect('/transaction');
+                            }
                         }
                     });
                 }
@@ -119,7 +128,7 @@ router.post('/speech', middleware.isLoggedIn,(req, res) => {
                             }
                             console.log(trans);
                             var success = 'These are the list of transactions you requested';
-                            res.render('transaction',{transaction:trans ,rate:10,success:success});
+                            res.render('transaction',{transaction:trans ,rate:10,success:success,page:"transaction"});
                         }
                     });
                 }
@@ -135,18 +144,21 @@ router.post('/speech', middleware.isLoggedIn,(req, res) => {
                             }
                             console.log(transaction);
                             success='These are the list of transactions you requested';
-                            res.render('transaction',{transaction:transaction, rate:10,success:success});
+                            res.render('transaction',{transaction:transaction, rate:10,success:success,page:"transaction"});
                         }
                     });
                 }
 
             }
+            //UPDATE
             else if(op == 'update'|| op =='correct'|| op == 'rectify'){
                 delete newdata.operation;
-                var set = newdata.set;
+                var setData = newdata.set;
                 delete newdata.set;
-                if(newdata.length != undefined){
-                    transaction.updateMany(newdata, { $set: set},function(err,result){
+                console.log(setData);
+                console.log(newdata);
+                if(Object.keys(newdata).length != 0){
+                    transaction.updateMany(newdata, { $set: setData},function(err,result){
                         if(err){
                             console.log(err);
                         }

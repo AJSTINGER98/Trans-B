@@ -22,7 +22,7 @@ router.post("/register",function(req , res){
 				return res.redirect("/register");
 			}
 			passport.authenticate("local")(req , res , function(){
-				req.flash("success" , "Welcome " + user.username + ". I am Janice. I will be assisting you with all your business transactions. Just click the microphone button on the screen to Create or Delete or Update transactions and I will do it in an instance.");
+				req.flash("success" , "Welcome " + user.username + ". I am Janice. I will be assisting you with all your business transactions.");
 				res.redirect("/");
 			});
 
