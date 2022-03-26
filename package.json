@@ -23,7 +23,7 @@
     "express": "^4.17.1",
     "express-session": "^1.17.0",
     "lodash": "^4.17.19",
-    "minimist": "^1.2.5",
+    "minimist": "^1.2.6",
     "mongodb": "^3.5.3",
     "mongoose": "^5.9.1",
     "nodemon": "^2.0.4",
