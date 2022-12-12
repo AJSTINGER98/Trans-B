@@ -20,7 +20,7 @@
     "connect-flash": "^0.1.1",
     "dot-prop": "^5.2.0",
     "ejs": "^3.0.1",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "express-session": "^1.17.0",
     "lodash": "^4.17.19",
     "minimist": "^1.2.5",
